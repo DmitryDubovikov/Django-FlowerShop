@@ -1,6 +1,6 @@
 [flake8]
 # W503 conflicts with W504 https://github.com/mila-iqia/cookiecutter-pyml/issues/10
-ignore = I201
+ignore = I201, F401
 exclude = .git, __pycache__, .venv, venv
 filename = *.py
 max-line-length = 100

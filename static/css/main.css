@@ -348,7 +348,7 @@ opacity: 0.3;
 /*card.html*/
 .card {
 	padding-top: 50px;
-	padding-bottom: 100px;	
+	padding-bottom: 100px;
 }
 .card__block_first {
 	width: 602px;
@@ -687,7 +687,7 @@ margin-bottom: 5px;
 .order__form_item .orderStep_form_input {
 	width: 88px;
 	margin-right: 10px;
-	
+
 }
 .orderStep_form input[name="cardFname"] {
 	width: 220px;
@@ -698,7 +698,7 @@ margin-bottom: 5px;
 }
 
 .orderStep .order_items {
-	
+
 }
 
 /*consultation.html*/
