@@ -16,6 +16,10 @@ def quiz(request):
     return render(request, "flower_shop/quiz.html")
 
 
+def order(request):
+    return render(request, "flower_shop/order.html")
+
+
 def card(request, id):
     try:
         bouquet = Bouquet.objects.get(id=id)
