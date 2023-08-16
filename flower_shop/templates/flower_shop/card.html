@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section id="card">
+	<div class="container">
+		<div class="card ficb">
+			{% if bouquet %}
+			{% if bouquet.is_recommended and bouquet.image.url %}
+			<div class="card__block card__block_first">
+				<img src="{{ bouquet.image.url }}" alt="img" class="card__img">
+			</div>
+			{% endif %}
+			<div class="card__block card__block_sec">
+				<div class="title">{{ bouquet.name }}</div>
+				<div class="card__block_price">{{ bouquet.price }} руб</div>
+				<div class="card__elems ">
+					<span class="card__elems_intro">Состав</span>
+					<div class="card__items">
+						{% for flower_set in bouquet.flowers_sets.all %}
+						<span class="card_items_intro">
+							{{ flower_set.flower.name }} - {{ flower_set.count }} шт.
+						</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="card__elems ">
+					<span class="card__elems_intro">Размер</span>
+					<div class="card__items">
+						<span class="card_items_intro">
+							Высота - {{ bouquet.height }} см
+						</span>
+						<span class="card_items_intro">
+							Ширина - {{ bouquet.width }} см
+						</span>
+					</div>
+				</div>
+				<button class="btn largeBtn card__btn">Заказать букет</button>
+			</div>
+			{% else %}
+			<div class="card__block card__block_sec">
+				<div class="title">Букет не найден</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+{% endblock %}
