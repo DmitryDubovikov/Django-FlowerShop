@@ -12,6 +12,10 @@ def catalog(request):
     return render(request, "flower_shop/catalog.html", context)
 
 
+def quiz(request):
+    return render(request, "flower_shop/quiz.html")
+
+
 def card(request, id):
     try:
         bouquet = Bouquet.objects.get(id=id)
