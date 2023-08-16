@@ -10,12 +10,20 @@
 
 
 				{% for item in bouquets %}
+				{% if item.image %}
 				<div class="recommended__block_elems ficb" background: url({{ item.image.url }}) no-repeat center bottom
 					/ cover>
 					<span class="recommended__block_intro">{{ item.name }}</span>
 					<span class="recommended__block_price">{{ item.price }} руб</span>
 					<img src="{{ item.image.url }}" alt="bouquet image">
+					
 				</div>
+				{% else %}
+				<div class="recommended__block_elems ficb">
+					<span class="recommended__block_intro">{{ item.name }}</span>
+					<span class="recommended__block_price">{{ item.price }} руб</span>					
+				</div>
+				{% endif %}
 				{% endfor %}
 
 				<!-- <div class="recommended__elems ficb recommended__elems_first">

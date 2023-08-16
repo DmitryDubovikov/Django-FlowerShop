@@ -6,7 +6,7 @@
 	<div class="container">
 		<div class="card ficb">
 			{% if bouquet %}
-			{% if bouquet.is_recommended and bouquet.image.url %}
+			{% if bouquet.is_recommended and bouquet.image %}
 			<div class="card__block card__block_first">
 				<img src="{{ bouquet.image.url }}" alt="img" class="card__img">
 			</div>

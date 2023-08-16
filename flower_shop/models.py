@@ -4,8 +4,11 @@ from django.db import models
 
 class Flower(models.Model):
     name = models.CharField("название", max_length=100)
-    price = models.IntegerField(
-        verbose_name="цена цветка",
+    price = models.DecimalField(
+        verbose_name="цена",
+        max_digits=8,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
     )
 
     class Meta:
@@ -25,6 +28,7 @@ class FlowerSet(models.Model):
     )
     count = models.IntegerField(
         verbose_name="число",
+        validators=[MinValueValidator(1)],
     )
 
     class Meta:
