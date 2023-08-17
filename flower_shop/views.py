@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from phonenumber_field.validators import (ValidationError,
+                                          validate_international_phonenumber)
 
-from .models import Bouquet, Consultation
-from phonenumber_field.validators import validate_international_phonenumber, ValidationError
+from .models import Bouquet, Consultation, Order
 
 
 def index(request):
@@ -18,8 +19,29 @@ def quiz(request):
 
 
 def order(request, bouquet_id):
-    context = {"bouquet_id": bouquet_id}
-    return render(request, "flower_shop/order.html", context)
+    if len(request.GET) == 0:
+        # render order.html
+        context = {"bouquet_id": bouquet_id}
+        return render(request, "flower_shop/order.html", context)
+
+    # create order and render order-step.html
+    context = {}
+    if request.method == "GET":
+        try:
+            validate_international_phonenumber(request.GET["tel"])
+            new_order = Order.objects.create(
+                bouquet=Bouquet.objects.get(id=bouquet_id),
+                name=request.GET["fname"],
+                phone=request.GET["tel"],
+                address=request.GET["adres"],
+                preferred_delivery_time=request.GET["orderTime"],
+            )
+            context["order_created"] = True
+            context["order_id"] = new_order.id
+            return render(request, "flower_shop/order-step.html", context)
+        except ValidationError:
+            context["order_created"] = False
+            return render(request, "flower_shop/order.html", {"bouquet_id": bouquet_id})
 
 
 def card(request, bouquet_id):

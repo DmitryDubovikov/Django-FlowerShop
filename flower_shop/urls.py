@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import card, catalog, index, order, quiz, consultation
+from .views import card, catalog, consultation, index, order, quiz
 
 app_name = "flower_shop"
 
