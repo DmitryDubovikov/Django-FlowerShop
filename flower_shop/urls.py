@@ -7,7 +7,7 @@ app_name = "flower_shop"
 urlpatterns = [
     path("", index, name="index"),
     path("catalog/", catalog, name="catalog"),
-    path("card/<int:id>", card, name="card"),
+    path("card/<int:bouquet_id>", card, name="card"),
     path("quiz/", quiz, name="quiz"),
-    path("order/", order, name="order"),
+    path("order/<int:bouquet_id>", order, name="order"),
 ]

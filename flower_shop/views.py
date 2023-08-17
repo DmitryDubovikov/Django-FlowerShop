@@ -16,13 +16,14 @@ def quiz(request):
     return render(request, "flower_shop/quiz.html")
 
 
-def order(request):
-    return render(request, "flower_shop/order.html")
+def order(request, bouquet_id):
+    context = {"bouquet_id": bouquet_id}
+    return render(request, "flower_shop/order.html", context)
 
 
-def card(request, id):
+def card(request, bouquet_id):
     try:
-        bouquet = Bouquet.objects.get(id=id)
+        bouquet = Bouquet.objects.get(id=bouquet_id)
     except Bouquet.DoesNotExist:
         bouquet = None
     context = {

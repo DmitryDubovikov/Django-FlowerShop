@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<!-- <button class="btn largeBtn card__btn">Заказать букет</button> -->
-				<a href="{% url 'flower_shop:order' %}" class="button">Заказать букет</a>
+				<a href="{% url 'flower_shop:order' bouquet.id %}" class="button">Заказать букет</a>
 			</div>
 			{% else %}
 			<div class="card__block card__block_sec">
