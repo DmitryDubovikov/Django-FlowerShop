@@ -30,3 +30,7 @@ def card(request, bouquet_id):
         "bouquet": bouquet,
     }
     return render(request, "flower_shop/card.html", context)
+
+
+def consultation(request):
+    return render(request, "flower_shop/consultation.html")
