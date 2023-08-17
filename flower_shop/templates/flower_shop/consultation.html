@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block content %}
+	{% if bad_phone %}
+	<script type="text/javascript">
+		alert("Номер телефона введён неверно. Попробуйте снова.");
+	</script>
+	{% endif %}
+	{% if consultation_created %}
+	<script type="text/javascript">
+		alert("Отлично, скоро с вами свяжемся. А пока можете присмотреть что-нибудь из готовой коллекции.");
+		window.location.replace("/catalog/");
+	</script>
+	{% endif %}
 	<section id="singUpConsultation">
 		<div class="container">
 			<div class="singUpConsultation">
