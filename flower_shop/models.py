@@ -1,5 +1,21 @@
 from django.core.validators import MinValueValidator
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
+
+
+class Consultation(models.Model):
+    firstname = models.CharField("имя", max_length=100)
+    phonenumber = PhoneNumberField(
+        verbose_name="номер телефона",
+        unique=False,
+    )
+
+    class Meta:
+        verbose_name = "консультация"
+        verbose_name_plural = "консультации"
+
+    def __str__(self):
+        return f"{self.firstname}: {self.phonenumber.as_e164}"
 
 
 class Flower(models.Model):
@@ -82,3 +98,25 @@ class Bouquet(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Order(models.Model):
+    bouquet = models.ForeignKey(Bouquet, on_delete=models.CASCADE, verbose_name="букет")
+    name = models.CharField("имя", max_length=100)
+    phone = PhoneNumberField(
+        verbose_name="номер телефона",
+        unique=False,
+    )
+    address = models.CharField(
+        "адрес",
+        max_length=100,
+        blank=True,
+    )
+    preferred_delivery_time = models.CharField("желаемое время доставки", max_length=50)
+
+    class Meta:
+        verbose_name = "заказ"
+        verbose_name_plural = "заказы"
+
+    def __str__(self):
+        return f"{self.bouquet.name} для {self.name}"

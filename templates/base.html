@@ -25,8 +25,8 @@
                         <ul class="menu ficc">
                             <li class="menu__item"><a href="{% url 'flower_shop:catalog' %}"
                                     class="menu__item_link">Каталог</a></li>
-                            <li class="menu__item"><a href="#" class="menu__item_link">Рекомендации</a></li>
-                            <li class="menu__item"><a href="#" class="menu__item_link">Контакты</a></li>
+                            <li class="menu__item"><a href="/#recommended" class="menu__item_link">Рекомендации</a></li>
+                            <li class="menu__item"><a href="/#contacts" class="menu__item_link">Контакты</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -38,11 +38,13 @@
 
     {% block content %}
     {% endblock %}
+
+    {% block consultation_content %}
     <section id="consultation">
         <div class="container">
             <div class="consultation">
                 <div class="title consultation__title">Оставьте заявку на консультацию</div>
-                <form action="#" class="consultation__form">
+                <form action="/consultation#" class="consultation__form">
                     <input type="text" name="fname" class="consultation__form_input" placeholder="Введите Имя" required>
                     <input type="text" name="tel" class="consultation__form_input" placeholder="+ 7 (999) 000 00 00"
                         required>
@@ -51,6 +53,8 @@
             </div>
         </div>
     </section>
+    {% endblock %}
+    {% block footer_content %}
     <footer id="footer">
         <div class="container">
             <div class="footer">
@@ -59,8 +63,8 @@
                     <ul class="menu footer__menu ficc">
                         <li class="menu__item"><a href="{% url 'flower_shop:catalog' %}"
                                 class="menu__item_link">Каталог</a></li>
-                        <li class="menu__item"><a href="#" class="menu__item_link">Рекомендации</a></li>
-                        <li class="menu__item"><a href="#" class="menu__item_link">Контакты</a></li>
+                        <li class="menu__item"><a href="/#recommended" class="menu__item_link">Рекомендации</a></li>
+                        <li class="menu__item"><a href="/#contacts" class="menu__item_link">Контакты</a></li>
                     </ul>
                 </nav>
                 <hr class="line">
@@ -70,6 +74,7 @@
             </div>
         </div>
     </footer>
+    {% endblock %}
 </body>
 
 </html>

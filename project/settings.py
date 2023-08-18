@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # external
     # internal apps
     "flower_shop.apps.FlowerShopConfig",
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
