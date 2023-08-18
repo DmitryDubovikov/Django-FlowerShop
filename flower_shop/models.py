@@ -64,7 +64,6 @@ class Bouquet(models.Model):
     name = models.CharField("название", max_length=100)
     description = models.TextField(
         "описание",
-        max_length=250,
         blank=True,
     )
     is_recommended = models.BooleanField(
@@ -95,6 +94,9 @@ class Bouquet(models.Model):
     class Meta:
         verbose_name = "букет"
         verbose_name_plural = "букеты"
+
+    def consits_of(self):
+        return ", ".join([flover_set.__str__() for flover_set in self.flowers_sets.all()])
 
     def __str__(self):
         return self.name

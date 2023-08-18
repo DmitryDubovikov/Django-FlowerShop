@@ -2,6 +2,12 @@
 {% load static %}
 
 {% block content %}
+	<script>
+		function goToStep(first_param) {
+			var path = "/quiz-step/?fparam=" + first_param
+			window.location.replace(path);
+		}	
+	</script>
 	<section id="quiz">
 		<div class="container">
 			<div class="quiz">
@@ -12,9 +18,9 @@
 				<div class="quiz__block">
 					<h1 class="quiz__title">К какому событию нужен букет?</h1>
 					<div class="quiz__elems fic">
-						<button class="quiz__elem">Свадьба</button>
-						<button class="quiz__elem">День рождения</button>
-						<button class="quiz__elem">Без повода</button>
+						<button class="quiz__elem" onclick="goToStep('0')">Свадьба</button>
+						<button class="quiz__elem" onclick="goToStep('1')">День рождения</button>
+						<button class="quiz__elem" onclick="goToStep('2')">Без повода</button>
 					</div>
 					<div class="quiz__progress">
 						<div class="quiz__progress_step">

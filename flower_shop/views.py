@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from phonenumber_field.validators import (ValidationError,
-                                          validate_international_phonenumber)
+from phonenumber_field.validators import ValidationError, validate_international_phonenumber
 
 from .models import Bouquet
 from more_itertools import chunked
@@ -16,13 +15,46 @@ def catalog(request):
     bouquets = Bouquet.objects.all()
     page_columns = list(chunked(bouquets, columns_count))
     context = {
-        'page_columns': page_columns,
+        "page_columns": page_columns,
     }
     return render(request, "flower_shop/catalog.html", context)
 
 
 def quiz(request):
     return render(request, "flower_shop/quiz.html")
+
+
+def quiz_step(request):
+    return render(request, "flower_shop/quiz-step.html")
+
+
+def result(request):
+    min_price = 0
+    max_price = 0
+    occasion = 0
+    if request.method == "GET" and "fparam" in request.GET and "sparam" in request.GET:
+        occasion = request.GET["fparam"]
+
+    all_bouquets = Bouquet.objects.all()
+    bouquets_with_price = all_bouquets.filter(price__gte=min_price).filter(price__lte=max_price)
+    if not bouquets_with_price:
+        bouquets_with_price = all_bouquets
+
+    bouquet = None
+    match occasion:
+        case 0:
+            bouquet = bouquets_with_price.order_by("price")[-1]
+        case 1:
+            bouquet = bouquets_with_price.order_by("price")[-1]
+        case 2:
+            bouquet = bouquets_with_price.order_by("price").first()
+        case _:
+            bouquet = bouquets_with_price.first()
+
+    context = {
+        "bouquet": bouquet,
+    }
+    return render(request, "flower_shop/result.html", context)
 
 
 def order(request, bouquet_id):
@@ -67,7 +99,7 @@ def consultation(request):
         "bad_phone": False,
         "consultation_created": False,
     }
-    if request.method == "GET":
+    if request.method == "GET" and "tel" in request.GET:
         try:
             validate_international_phonenumber(request.GET["tel"])
             Consultation.objects.create(
