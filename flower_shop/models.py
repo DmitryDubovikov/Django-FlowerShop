@@ -115,6 +115,9 @@ class Order(models.Model):
         blank=True,
     )
     preferred_delivery_time = models.CharField("желаемое время доставки", max_length=50)
+    total_sum = models.DecimalField(
+        "сумма", max_digits=8, decimal_places=2, validators=[MinValueValidator(0)]
+    )
 
     class Meta:
         verbose_name = "заказ"

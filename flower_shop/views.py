@@ -70,12 +70,14 @@ def order(request, bouquet_id):
     if request.method == "GET":
         try:
             validate_international_phonenumber(request.GET["tel"])
+            bouquet = Bouquet.objects.get(id=bouquet_id)
             new_order = Order.objects.create(
-                bouquet=Bouquet.objects.get(id=bouquet_id),
+                bouquet=bouquet,
                 name=request.GET["fname"],
                 phone=request.GET["tel"],
                 address=request.GET["adres"],
                 preferred_delivery_time=request.GET["orderTime"],
+                total_sum=bouquet.price,
             )
             create_pay = send_payment(
                 new_order.bouquet.price, new_order.phone, 'email@ya.ru', new_order.bouquet, new_order.pk
