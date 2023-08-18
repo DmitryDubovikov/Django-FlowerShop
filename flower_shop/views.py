@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .models import Bouquet
+from more_itertools import chunked
 
 
 def index(request):
@@ -8,7 +9,12 @@ def index(request):
 
 
 def catalog(request):
-    context = {"bouquets": Bouquet.objects.all()}
+    columns_count = 2
+    bouquets = Bouquet.objects.all()
+    page_columns = list(chunked(bouquets, columns_count))
+    context = {
+        'page_columns': page_columns,
+    }
     return render(request, "flower_shop/catalog.html", context)
 
 
