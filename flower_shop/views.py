@@ -84,7 +84,6 @@ def order(request, bouquet_id):
             )
             url = create_pay["confirmation"]["confirmation_url"]
             return redirect(url)
-
         except ValidationError:
             context["order_created"] = False
             return render(request, "flower_shop/order.html", {"bouquet_id": bouquet_id})
