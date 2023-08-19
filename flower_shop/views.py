@@ -98,6 +98,7 @@ def order(request, bouquet_id):
                 "email@ya.ru",
                 new_order.bouquet,
                 new_order.pk,
+                f"{request.get_host()}/",
             )
             url = create_pay["confirmation"]["confirmation_url"]
             return redirect(url)
