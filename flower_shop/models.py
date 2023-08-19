@@ -9,6 +9,10 @@ class Consultation(models.Model):
         verbose_name="номер телефона",
         unique=False,
     )
+    processed = models.BooleanField(
+        "обработан",
+        default=False,
+    )
 
     class Meta:
         verbose_name = "консультация"
