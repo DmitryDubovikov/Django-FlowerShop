@@ -10,7 +10,11 @@ from .flowers_bot import send_message_to_bot
 
 
 def index(request):
-    return render(request, "flower_shop/index.html")
+    bouquets = Bouquet.objects.filter(is_recommended=True)
+    context = {
+        "bouquets": bouquets,
+    }
+    return render(request, "flower_shop/index.html", context)
 
 
 def catalog(request):
