@@ -9,8 +9,7 @@
 				<h1 class="banner__title">Мастерская цветов</h1>
 				<p class="banner__text">Подберем для вас букет за два шага, который идеально подойдет под вашу ситуацию
 				</p>
-				<!-- <button class="btn banner__btn">Подобрать букет</button> -->
-				<a href="{% url 'flower_shop:quiz' %}" class="button">Подобрать букет</a>
+				<a href="{% url 'flower_shop:quiz' %}" class="btn menu__item_link" style="color: blue;">Подобрать букет</a>
 			</div>
 			<img src="{% static 'img/bannerImg.png' %}" alt="banner Img" class="banner__img">
 		</div>
@@ -27,15 +26,17 @@
 				{% for item in bouquets %}
 					<div class="recommended__block" style="background: url('../media/{{ item.image|urlencode }}') no-repeat center bottom / cover;">
 						<div class="recommended__block_elems ficb">
-							<span class="recommended__block_intro" style="color: white">{{ item.name }}</span>
-							<span class="recommended__block_price" style="color: white">{{ item.price }} руб</span>
+							<span class="recommended__block_intro" style="color: rgb(0, 0, 0)">{{ item.name }}</span>
+							<span class="recommended__block_price" style="color: rgb(0, 0, 0)">{{ item.price }} руб</span>
 						</div>
 					</div>
 				{% endfor %}
 			</div>
-			<button
-        class="btn recommended__btn"><a href="/catalog/" class="menu__item_link" style="font-size: 20px">Показать всю коллекцию</a>
-      </button>
+			<button class="btn recommended__btn">
+				<a href="/catalog/" class="menu__item_link" style="font-size: 20px">
+					Показать всю коллекцию
+				</a>
+			</button>
 		</div>
 	</div>
 </section>

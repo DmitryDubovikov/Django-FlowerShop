@@ -8,7 +8,7 @@ from .flowers_bot import send_message_to_bot
 
 
 def index(request):
-    bouquets = Bouquet.objects.filter(is_recommended=True)
+    bouquets = Bouquet.objects.filter(is_recommended=True)[:3]
     context = {
         "bouquets": bouquets,
     }
@@ -90,7 +90,7 @@ def order(request, bouquet_id):
                 total_sum=bouquet.price,
             )
             send_message_to_bot(
-                f'Принят новый заказ: {new_order.bouquet}\n телефон {new_order.phone}\n адрес {new_order.address}\n время: {new_order.preferred_delivery_time}'
+                f"Принят новый заказ: {new_order.bouquet}\n телефон {new_order.phone}\n адрес {new_order.address}\n время: {new_order.preferred_delivery_time}"
             )
             create_pay = send_payment(
                 new_order.bouquet.price,
