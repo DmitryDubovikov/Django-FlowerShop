@@ -63,6 +63,10 @@ DEBUG=False
 ALLOWED_HOSTS=127.0.0.1,localhost
 # DB_URL=postgresql://<username>:<password>@<host>:<port>/<database>
 DB_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
+U_KASSA_TOKEN: // токен платежной системы Ю-КАССА
+ACCOUT_ID: идентификатор учетной записи Ю-КАССА
+TG_TOKEN: токен чат бота телеграмм
+chat_id: идентификатор чата для курьеров
 ```
 
 5. **Run Migrations:**

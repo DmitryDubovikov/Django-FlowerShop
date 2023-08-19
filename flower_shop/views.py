@@ -6,6 +6,7 @@ from phonenumber_field.validators import (ValidationError,
 from more_itertools import chunked
 from .models import Bouquet, Consultation, Order
 from .payments import send_payment
+from .flowers_bot import send_message_to_bot
 
 
 def index(request):
@@ -78,6 +79,9 @@ def order(request, bouquet_id):
                 address=request.GET["adres"],
                 preferred_delivery_time=request.GET["orderTime"],
                 total_sum=bouquet.price,
+            )
+            send_message_to_bot(
+                f'Принят новый заказ: {new_order.bouquet}\n телефон {new_order.phone}\n адрес {new_order.address}\n время: {new_order.preferred_delivery_time}'
             )
             create_pay = send_payment(
                 new_order.bouquet.price, new_order.phone, 'email@ya.ru', new_order.bouquet, new_order.pk
