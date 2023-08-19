@@ -3,11 +3,11 @@
 
 {% block content %}
 	<script>
-		function goToStep(second_param) {
+		function goToStep(min, max) {
 			const queryString = window.location.search;
 			const urlParams = new URLSearchParams(queryString);
-			const fparam = urlParams.get("fparam")
-			var path = "/result/?fparam=" + fparam + "&sparam=" + second_param
+			const occasion = urlParams.get("occasion")
+			var path = "/result/?occasion=" + occasion + "&min=" + min + "&max=" + max
 			window.location.replace(path);
 		}	
 	</script>
@@ -21,10 +21,11 @@
 				<div class="quiz__block">
 					<h1 class="quiz__title">На какой бюджет рассчитываете?</h1>
 					<div class="quiz__elems fic">
-						<button class="quiz__elem" onclick="goToStep('0')">До 1 000 руб</button>
-						<button class="quiz__elem" onclick="goToStep('1')">1 000 - 5 000 руб</button>
-						<button class="quiz__elem" onclick="goToStep('2')">от 5 000 руб</button>
-						<button class="quiz__elem" onclick="goToStep('3')">Не имеет значения</button>
+						{% for budget in budgets %}
+						<button class="quiz__elem" onclick="goToStep('{{ budget.min_price }}', '{{ budget.max_price }}')">
+							{{ budget }}
+						</button>
+						{% endfor %}
 					</div>
 					<div class="quiz__progress">
 						<div class="quiz__progress_step">

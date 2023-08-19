@@ -1,10 +1,8 @@
-
 from django.shortcuts import render, redirect
-from phonenumber_field.validators import (ValidationError,
-                                          validate_international_phonenumber)
+from phonenumber_field.validators import ValidationError, validate_international_phonenumber
 
 from more_itertools import chunked
-from .models import Bouquet, Consultation, Order
+from .models import Bouquet, Consultation, Order, Occasion, Budget
 from .payments import send_payment
 
 
@@ -23,39 +21,46 @@ def catalog(request):
 
 
 def quiz(request):
-    return render(request, "flower_shop/quiz.html")
+    context = {"occasions": Occasion.objects.all()}
+    return render(request, "flower_shop/quiz.html", context)
 
 
 def quiz_step(request):
-    return render(request, "flower_shop/quiz-step.html")
+    context = {"budgets": Budget.objects.all().order_by("-does_metter", "min_price", "max_price")}
+    return render(request, "flower_shop/quiz-step.html", context)
 
 
 def result(request):
-    min_price = 0
-    max_price = 0
-    occasion = 0
-    if request.method == "GET" and "fparam" in request.GET and "sparam" in request.GET:
-        occasion = request.GET["fparam"]
-
-    all_bouquets = Bouquet.objects.all()
-    bouquets_with_price = all_bouquets.filter(price__gte=min_price).filter(price__lte=max_price)
-    if not bouquets_with_price:
-        bouquets_with_price = all_bouquets
-
-    bouquet = None
-    match occasion:
-        case 0:
-            bouquet = bouquets_with_price.order_by("price")[-1]
-        case 1:
-            bouquet = bouquets_with_price.order_by("price")[-1]
-        case 2:
-            bouquet = bouquets_with_price.order_by("price").first()
-        case _:
-            bouquet = bouquets_with_price.first()
-
-    context = {
-        "bouquet": bouquet,
-    }
+    context = {"wrong_parameters": False}
+    if (
+        request.method == "GET"
+        and "occasion" in request.GET
+        and "min" in request.GET
+        and "max" in request.GET
+    ):
+        try:
+            occasion = request.GET["occasion"]
+            min_price = request.GET["min"]
+            max_price = request.GET["max"]
+            bouquets_with_price = Bouquet.objects.filter(price__gte=min_price).filter(
+                price__lte=max_price
+            )
+            if not bouquets_with_price:
+                bouquets_with_price = Bouquet.objects.filter(price__lte=max_price)
+            if not bouquets_with_price:
+                bouquets_with_price = Bouquet.objects.all()
+            target_bouquet = (
+                bouquets_with_price.filter(occasions__name=occasion).order_by("-price").first()
+            )
+            if not target_bouquet:
+                target_bouquet = bouquets_with_price.order_by("price").first()
+            context["bouquet"] = target_bouquet
+        except Exception:
+            context["bouquet"] = Bouquet.objects.all().first()
+            context["wrong_parameters"] = True
+    else:
+        context["bouquet"] = Bouquet.objects.all().first()
+        context["wrong_parameters"] = True
     return render(request, "flower_shop/result.html", context)
 
 
@@ -80,7 +85,11 @@ def order(request, bouquet_id):
                 total_sum=bouquet.price,
             )
             create_pay = send_payment(
-                new_order.bouquet.price, new_order.phone, 'email@ya.ru', new_order.bouquet, new_order.pk
+                new_order.bouquet.price,
+                new_order.phone,
+                "email@ya.ru",
+                new_order.bouquet,
+                new_order.pk,
             )
             url = create_pay["confirmation"]["confirmation_url"]
             return redirect(url)
@@ -116,8 +125,3 @@ def consultation(request):
         except ValidationError:
             context["bad_phone"] = True
     return render(request, "flower_shop/consultation.html", context)
-
-
-
-
-
