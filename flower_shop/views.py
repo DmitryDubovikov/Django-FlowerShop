@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from phonenumber_field.validators import ValidationError, validate_international_phonenumber
 
 from .models import Bouquet
 from more_itertools import chunked
 from .models import Bouquet, Consultation, Order
+from .payments import send_payment
 
 
 def index(request):
@@ -77,9 +78,14 @@ def order(request, bouquet_id):
                 preferred_delivery_time=request.GET["orderTime"],
                 total_sum=bouquet.price,
             )
-            context["order_created"] = True
-            context["order_id"] = new_order.id
-            return render(request, "flower_shop/order-step.html", context)
+            create_pay = send_payment(
+                new_order.bouquet.price, new_order.phone, 'email@ya.ru', new_order.bouquet, new_order.pk
+            )
+            url = create_pay["confirmation"]["confirmation_url"]
+            return redirect(url)
+            # context["order_created"] = True
+            # context["order_id"] = new_order.id
+            # return render(request, "flower_shop/order-step.html", context)
         except ValidationError:
             context["order_created"] = False
             return render(request, "flower_shop/order.html", {"bouquet_id": bouquet_id})

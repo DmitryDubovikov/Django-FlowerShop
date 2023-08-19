@@ -1,6 +1,7 @@
 .env
 .venv/
 venv/
+env/
 __pycache__/
 .vscode/
 bouquet_images/
