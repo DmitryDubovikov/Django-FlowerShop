@@ -55,6 +55,53 @@ class FlowerSet(models.Model):
         return f"{self.flower.name} - {self.count} шт."
 
 
+class Budget(models.Model):
+    MIN_PRICE = 0
+    MAX_PRICE = 100000
+    DOESNOT_METTER_MESSAGE = "Не имеет значения"
+
+    min_price = models.IntegerField(
+        verbose_name="минимальная цена",
+        validators=[MinValueValidator(0)],
+        default=MIN_PRICE,
+    )
+    max_price = models.IntegerField(
+        verbose_name="максимальная цена",
+        validators=[MinValueValidator(0)],
+        default=MAX_PRICE,
+    )
+    does_metter = models.BooleanField(
+        "имеет значение",
+        default=True,
+    )
+
+    class Meta:
+        verbose_name = "бюджет"
+        verbose_name_plural = "бюджеты"
+
+    def __str__(self):
+        if not self.does_metter:
+            return self.DOESNOT_METTER_MESSAGE
+        elif self.min_price != self.MIN_PRICE and self.max_price != self.MAX_PRICE:
+            return f"{self.min_price} - {self.max_price} руб"
+        elif self.min_price == self.MIN_PRICE and self.max_price != self.MAX_PRICE:
+            return f"до {self.max_price} руб"
+        elif self.min_price != self.MIN_PRICE and self.max_price == self.MAX_PRICE:
+            return f"от {self.min_price} руб"
+        return self.DOESNOT_METTER_MESSAGE
+
+
+class Occasion(models.Model):
+    name = models.CharField(max_length=50)
+
+    class Meta:
+        verbose_name = "повод"
+        verbose_name_plural = "поводы"
+
+    def __str__(self):
+        return self.name
+
+
 class BouquetQuerySet(models.QuerySet):
     def recommended(self):
         return self.filter(is_recommended=True)
@@ -90,6 +137,7 @@ class Bouquet(models.Model):
     width = models.IntegerField(
         verbose_name="ширина",
     )
+    occasions = models.ManyToManyField(to=Occasion, verbose_name="события", related_name="bouquets")
 
     class Meta:
         verbose_name = "букет"

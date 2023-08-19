@@ -3,8 +3,8 @@
 
 {% block content %}
 	<script>
-		function goToStep(first_param) {
-			var path = "/quiz-step/?fparam=" + first_param
+		function goToStep(occasion) {
+			var path = "/quiz-step/?occasion=" + occasion
 			window.location.replace(path);
 		}	
 	</script>
@@ -18,9 +18,9 @@
 				<div class="quiz__block">
 					<h1 class="quiz__title">К какому событию нужен букет?</h1>
 					<div class="quiz__elems fic">
-						<button class="quiz__elem" onclick="goToStep('0')">Свадьба</button>
-						<button class="quiz__elem" onclick="goToStep('1')">День рождения</button>
-						<button class="quiz__elem" onclick="goToStep('2')">Без повода</button>
+						{% for occasion in occasions %}
+						<button class="quiz__elem" onclick="goToStep('{{ occasion.name }}')">{{ occasion.name }}</button>
+						{% endfor %}
 					</div>
 					<div class="quiz__progress">
 						<div class="quiz__progress_step">
