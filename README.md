@@ -1,39 +1,24 @@
 # Django-FlowerShop
 
-# ДЛЯ РАЗРАБОТЧИКОВ!
-
-Форматирование с учетом flake8. Создать папку .vscode и в ней файл settings.json:
-```
-{
-    "python.formatting.provider": "black",
-    "python.formatting.blackArgs": ["--line-length=100"],
-    "editor.formatOnSave": true,
-}
-```
-Для PyCharm можно использовать .editorconfig для тех же целей и результатов.
-
-Разработку новых фич ведем:
-
-1. Делаем ветку feature/super-feature от ветки develop
-2. Работаем-работаем-заканчиваем.
-3. Переключаемся на develop, делаем git pull.
-4. Готовую фичу мерджим в обновленный develop.
-
-Перед каждым коммитом проверяем, какие изменения попадают в коммит.
-
-Перед каждым коммитом форматируем текст по black и нашей настройке flake8 и запускаем команду:
-```
-pre-commit run --all-files
-```
-
-Settings.py настроен на то, что контейнер с базой будет запущен командой ниже. Можно без докера, тогда запускайте базу сообразно нашей настройке DATABASES в Settings.py.
-
-Run PostgreSQL in Docker:
-```bash
-docker run --name flowershop_db -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -v pgdata:/var/lib/postgresql/data -d postgres
-```
+http://77.105.168.57/
 
 
+Welcome to the Django Flower Shop project! This web application is built using the Django framework and is designed to provide an elegant online platform for buying and exploring a wide range of beautiful bouquets.
+
+<img src="flowershop.png" alt="Image Alt Text" width="600">
+
+Features
+* **Browse Bouquets**: Easily browse through a diverse collection of bouquets, each accompanied by stunning images and detailed descriptions.
+
+* **Search and Filter**: Use the search and filtering options to quickly find the flowers you're looking for based on various criteria such as type, color, and occasion.
+
+* **Orders**: Order your favorite bouquet, and proceed to checkout when you're ready.
+
+* **Telegram notifications for couriers**: enhanced communicationt between a courier team and shop managers.
+
+* **Secure Payments**: Enjoy the peace of mind with secure payment options, ensuring a safe and seamless transaction process.
+
+* **Admin Dashboard**: Admins can manage bouquets listings, orders, and ... through an intuitive admin dashboard.
 
 ## Getting Started
 
@@ -61,8 +46,7 @@ pip install -r requirements.txt
 SECRET_KEY=changeme
 DEBUG=False
 ALLOWED_HOSTS=127.0.0.1,localhost
-# DB_URL=postgresql://<username>:<password>@<host>:<port>/<database>
-DB_URL=postgresql://postgres:mysecretpassword@localhost:5432/postgres
+DB_URL=postgresql://<username>:<password>@<host>:<port>/<database>
 U_KASSA_TOKEN: // токен платежной системы Ю-КАССА
 ACCOUT_ID: идентификатор учетной записи Ю-КАССА
 TG_TOKEN: токен чат бота телеграмм
