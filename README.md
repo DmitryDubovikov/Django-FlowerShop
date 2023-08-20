@@ -5,9 +5,11 @@ http://77.105.168.57/
 
 Welcome to the Django Flower Shop project! This web application is built using the Django framework and is designed to provide an elegant online platform for buying and exploring a wide range of beautiful bouquets.
 
-<img src="flowershop.png" alt="Image Alt Text" width="600">
+<div style="display: flex; justify-content: center;">
+    <img src="flowershop.png" alt="Image Alt Text" width="600">
+</div>
 
-Features
+## Features
 * **Browse Bouquets**: Easily browse through a diverse collection of bouquets, each accompanied by stunning images and detailed descriptions.
 
 * **Search and Filter**: Use the search and filtering options to quickly find the flowers you're looking for based on various criteria such as type, color, and occasion.
