@@ -9,4 +9,5 @@ more-itertools~=9.1.0
 django-phonenumber-field[phonenumbers]==7.1.0
 yookassa==2.4.0
 python-telegram-bot==13.7
+gunicorn==20.1.0
 
