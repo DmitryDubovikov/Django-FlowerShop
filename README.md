@@ -85,9 +85,13 @@ Open your browser and navigate to http://127.0.0.1:8000/
 
 
 8. Оплата заказов через сервис "Ю-КАССА".
+9. 
 
 ![img.png](static/img_pay.png)
 
+
+
 9. Чат бот с информацией о заказах:
+
 
 ![img_1.png](static/img_bot.png)
